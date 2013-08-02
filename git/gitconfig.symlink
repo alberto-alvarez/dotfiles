@@ -34,7 +34,7 @@
         autocrlf = false
         whitespace = cr-at-eol
         excludesfile = ~/.gitignore
-        editor = vim
+        editor = nano
 [apply]
         whitespace = nowarn
 [mergetool]
