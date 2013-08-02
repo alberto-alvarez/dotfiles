@@ -1,0 +1,45 @@
+# Sample gitconfig
+#
+
+[hub]
+        protocol = https
+[user]
+        name = AUTHORNAME
+        email = AUTHOREMAIL
+[credential]
+        helper = GIT_CREDENTIAL_HELPER
+[alias]
+        co = checkout
+        count   = !git shortlog -sn
+        st   = !git status -sb
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+        ui = true
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red
+    new = green
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[core]
+        autocrlf = false
+        whitespace = cr-at-eol
+        excludesfile = ~/.gitignore
+        editor = vim
+[apply]
+        whitespace = nowarn
+[mergetool]
+        keepBackup = false
+[difftool]
+        prompt = false
+[help]
+        autocorrect = 1
