@@ -43,6 +43,30 @@ case $yno in
             ;;
 esac
 
+echo ""
+echo "   What prefix to add to $dbname?"
+echo "     [ ENTER ] - No prefix (default)"
+echo "     [ U ] - Add my username '$USER""_' as prefix"
+echo "     [ C ] - Add Custom prefix"
+echo -n "     What do you want to do? "
+read prefix
+case $prefix in
+
+        [uU] )
+            echo "     - Using "$USER"_ as prefix."
+            importedDbName="$USER"_$dbname
+            ;;
+        [cC] )
+            echo -n "     Type your prefix (include separator): "
+            read dbPrefix
+            importedDbName="$dbPrefix"$dbname
+            echo "     - Using '$dbPrefix' as prefix."
+            ;;
+        *) echo "     - No prefix."
+            importedDbName=$dbname
+            ;;
+esac
+
 uncompressedDumpFile="$USER"_$dbname-$date.sql
 
 # skip download if you already did it recently
@@ -54,15 +78,15 @@ then
         echo "File /tmp/$uncompressedDumpFile does not exist!"
         exit 1
     fi
-    echo "Dropping Database " "$USER"_$dbname
+    echo "Dropping Database " $importedDbName
     # || true to avoid exit if db does not exist!
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop "$USER"_$dbname || true
+    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop $importedDbName || true
 
-    echo "Creating Database " "$USER"_$dbname
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS create "$USER"_$dbname
+    echo "Creating Database " $importedDbName
+    mysqladmin -u $MYSQLUSER -p$MYSQLPASS create $importedDbName
 
     echo "    Skipping download and importing to ""$USER""_$dbname ..."
-    mysql -u $MYSQLUSER -p$MYSQLPASS "$USER"_$dbname < /tmp/$uncompressedDumpFile
+    mysql -u $MYSQLUSER -p$MYSQLPASS $importedDbName < /tmp/$uncompressedDumpFile
 else
     echo "    1. Downloading $dbname-$date.sql.gz to /tmp/"$uncompressedDumpFile.gz
     scp $EXTERNALIP:$DBBACKUPPATH/$dbname-$date.sql.gz /tmp/$uncompressedDumpFile.gz
@@ -70,19 +94,19 @@ else
     echo "    2. Decompressing gz file..."
     gunzip -f /tmp/$uncompressedDumpFile.gz
 
-    echo "    3. Import over ""$USER"_$dbname"?"
+    echo "    3. Import over "$importedDbName"?"
     echo ""
     echo "   Press ENTER to proceed! [CTRL+C to cancel]"
     echo "   "
     read ok
 
-    echo "Dropping Database " "$USER"_$dbname
+    echo "Dropping Database " $importedDbName
     # || true to avoid exit if db does not exist!
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop "$USER"_$dbname || true
+    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop $importedDbName || true
 
-    echo "Creating Database " "$USER"_$dbname
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS create "$USER"_$dbname
+    echo "Creating Database " $importedDbName
+    mysqladmin -u $MYSQLUSER -p$MYSQLPASS create $importedDbName
 
     echo "    Importing to ""$USER""_$dbname ..."
-    mysql -u $MYSQLUSER -p$MYSQLPASS "$USER"_$dbname < /tmp/$uncompressedDumpFile
+    mysql -u $MYSQLUSER -p$MYSQLPASS $importedDbName < /tmp/$uncompressedDumpFile
 fi
