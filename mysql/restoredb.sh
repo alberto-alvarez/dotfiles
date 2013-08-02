@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # This script will:
 #  1. Download MySQL dump files for given database name and backup date
 #  2. Drop local database
@@ -53,7 +55,8 @@ then
         exit 1
     fi
     echo "Dropping Database " "$USER"_$dbname
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop "$USER"_$dbname
+    # || true to avoid exit if db does not exist!
+    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop "$USER"_$dbname || true
 
     echo "Creating Database " "$USER"_$dbname
     mysqladmin -u $MYSQLUSER -p$MYSQLPASS create "$USER"_$dbname
@@ -74,7 +77,8 @@ else
     read ok
 
     echo "Dropping Database " "$USER"_$dbname
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop "$USER"_$dbname
+    # || true to avoid exit if db does not exist!
+    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop "$USER"_$dbname || true
 
     echo "Creating Database " "$USER"_$dbname
     mysqladmin -u $MYSQLUSER -p$MYSQLPASS create "$USER"_$dbname
