@@ -2,6 +2,7 @@
 #
 # bootstrap installs things.
 
+DOTFILES_VERSION='0.1.1'
 DOTFILES_ROOT="`pwd`"
 # your bin folder should be in your PATH
 BIN_SCRIPTS="$HOME/bin"
