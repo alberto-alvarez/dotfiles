@@ -2,6 +2,12 @@
 #
 # bootstrap installs things.
 
+# Inspired by Zach Holman´s dotfiles:
+# https://github.com/holman/dotfiles
+#
+# Stolen from Zach Holman
+# https://github.com/holman/dotfiles/blob/master/script/bootstrap
+
 DOTFILES_VERSION='0.2.0'
 DOTFILES_ROOT="`pwd`"
 # your bin folder should be in your PATH
