@@ -9,17 +9,17 @@ function music () {
 
 function cdsubmit () {
    cd $MYSITES/submit/public/$1
-   guake -r Submit
+   guake -r "Submit $1"
 }
 
 function cdhost () {
    cd $MYSITES/host/public/$1
-   guake -r Host
+   guake -r "Host $1"
 }
 
 function cdportais () {
    cd $MYSITES/portais/public/$1
-   guake -r Portais
+   guake -r "Portais $1"
 }
 
 function cddotfiles () {
