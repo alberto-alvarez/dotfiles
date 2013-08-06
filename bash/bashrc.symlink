@@ -8,6 +8,12 @@ fi
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# autoload .sh files
+for source in `find .dotfiles -maxdepth 2 -name \*.sh`
+do
+  source $source
+done
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
@@ -112,29 +118,6 @@ fi
 function cdw () {
    cd /home/$USER/Documents/turing/$USER/www/$1
    ls
-}
-
-function cdgutenberg () {
-  linuxpath=$1
-  linuxpath=${linuxpath//s/r/}
-  echo $linuxpath
-   #cd /home/lpanebr/Documents/gutenberg/$linuxpath
-   ls
-}
-
-function cdsubmit () {
-   cd /home/lpanebr/mysites/submit/public/$1
-   git status
-}
-
-function cdhost () {
-   cd /home/lpanebr/mysites/host/public/$1
-   git status
-}
-
-function gitst () {
-   git status
-   git branch
 }
 
 PATH=$PATH:/home/lpanebr/bin:/home/lpanebr/Dropboxes/lpanebr/Dropbox/todo
