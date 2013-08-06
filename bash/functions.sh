@@ -2,6 +2,11 @@
 
 # my bash functions
 
+function music () {
+   guake -r cmus
+   cmus
+}
+
 function cdsubmit () {
    cd $MYSITES/submit/public/$1
    guake -r Submit
