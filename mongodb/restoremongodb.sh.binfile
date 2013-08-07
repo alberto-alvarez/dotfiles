@@ -1,0 +1,91 @@
+#!/bin/bash
+
+set -e
+
+info () {
+  printf "  [ \033[00;34m..\033[0m ] $1"
+}
+
+user () {
+  printf "\r  [ \033[0;33m?\033[0m ] $1 "
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+fail () {
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+# This script will:
+#  1. Delete your $HOME/dump folder!
+#  2. Run mongodump on a user requested HOST and DBNAME to create a new $HOME/dump
+#  3. Run mongorestore with --drop option
+#  4. Create a tar.gz file for the dump and move it to $HOME_BACKUPS_PATH/mongodb/
+#
+# This script expects the CONSTANTS below to be defined..
+# It is best if you define then in a super secret ~/.localrc file like this:
+source ~/.localrc
+# But if you want uncomment and set them below:
+
+# MONGODB_USER="" #not using authentication yet.. :-(
+# MONGODB_PASS="" #not using authentication yet.. :-(
+# MONGODB_PRODUCTION_IP=""
+# MONGODB_EXTERNAL_IP=""
+# MONGODB_LOCAL_IP=""
+# HOME_BACKUPS_PATH=$HOME/backups
+
+# We expect backup files to be gunziped and named like dbname-yyyy-mm-dd.sql.gz
+# Save today date for convenience
+date=`date +%Y-%m-%d`
+
+echo ""
+echo "MongoDB remote dump and restore"
+echo ""
+user "What database name to restore?"
+read dbname
+
+nameDate=$dbname-$date
+
+
+# download dump wich mongodump to /tmp/dump-dbname
+# ?make a tar.gz
+# ?move tar.gz somewhere HOME_BACKUPS_PATH
+# restore with mongorestore from /tmp dropping db
+
+user "What IP to use? [L]ocal (default), E[x]ternal, [P]roduction? "
+read -n 1 ipToUse
+case $ipToUse in
+
+        [xX] )
+            success "Using $MONGODB_EXTERNAL_IP"
+            importIP=$MONGODB_EXTERNAL_IP
+            origin='mongodb_turing'
+            ;;
+        [pP] )
+            success "Using $MONGODB_PRODUCTION_IP"
+            importIP=$MONGODB_PRODUCTION_IP
+            origin='mongodb_production'
+            ;;
+        *) success "Using $MONGODB_LOCAL_IP"
+            importIP=$MONGODB_LOCAL_IP
+            origin='mongodb_turing'
+            ;;
+esac
+
+/bin/rm -rf $HOME/dump
+mongodump -h $importIP -d $dbname
+mongorestore --drop
+
+# if script did not exit (set -e), we assume all went well
+success "$HOME/dump deleted"
+success "Dump saved to $HOME/dump"
+success "Dump restored"
+
+tar czf $origin-$nameDate.tar.gz $HOME/dump
+mkdir -p $HOME/backups/mongodb
+mv $origin-$nameDate.tar.gz $HOME_BACKUPS_PATH/mongodb/
+success "Dump backup saved to $HOME/backups/mongodb/$origin-$nameDate.tar.gz"
