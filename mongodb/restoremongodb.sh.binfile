@@ -77,6 +77,7 @@ case $ipToUse in
 esac
 
 /bin/rm -rf $HOME/dump
+cd $HOME
 mongodump -h $importIP -d $dbname
 mongorestore --drop
 
@@ -86,6 +87,6 @@ success "Dump saved to $HOME/dump"
 success "Dump restored"
 
 tar czf $origin-$nameDate.tar.gz $HOME/dump
-mkdir -p $HOME/backups/mongodb
+mkdir -p $HOME_BACKUPS_PATH/mongodb/
 mv $origin-$nameDate.tar.gz $HOME_BACKUPS_PATH/mongodb/
 success "Dump backup saved to $HOME/backups/mongodb/$origin-$nameDate.tar.gz"
