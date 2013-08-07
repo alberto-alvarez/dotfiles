@@ -36,3 +36,7 @@ function gogutenberg () {
    guake -r gutenberg
    ssh lpanebr@192.168.1.8
 }
+
+function findhere () {
+   grep -irn "$@" --exclude-dir='.git' .
+}
