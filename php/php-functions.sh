@@ -3,5 +3,5 @@
 # my php bash functions
 
 function createsite() {
-   sudo php /home/lpanebr/bin/create-project.php $@
+   sudo php /home/lpanebr/bin/lgp-create-project.php $@
 }

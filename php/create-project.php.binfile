@@ -1,0 +1,121 @@
+<?php
+/**
+ * phph script used to set up a new webdev project that does:
+ * creates folder structure with index.html (with option to create a zf project)
+ * creates a virtual host, enables the site and restarts apache
+ */
+if ($argc < 3) {
+    echo "Version: create-project 0.2.1 23/10/2009 http://www.panepucci.com.br\n";
+    echo "Copyright: Copyright (C) 2009 Luciano Panepucci\n\n";
+    echo "Usage:\tcreate-project project-name base-folder username [-zf]\n\n";
+    echo "\tproject-name:\tname of the folder to be created insite the base-folder\n";
+    echo "\tbase-folder:\tfull path without trailing slash! This is where the project-name/public will be created\n";
+    echo "\tusername:\tthe username that should be the owner of the project.\n";
+    die ();
+}
+
+/**
+ * set vars and folder names used by the script
+ */
+$projectName = $argv[1];
+$baseFolder  = $argv[2];
+$username    = $argv[3];
+#$baseFolder  = "/home/$username/mysites";
+$publicFolder = "$baseFolder/$projectName/public";
+if (in_array('-zf', $argv))
+    $zfproject = true;
+
+/**
+ * create project folder
+ */
+if ($zfproject) {
+    echo "criando zend project...\n";
+    exec("/home/lpanebr/bin/zf.sh create project $baseFolder/$projectName");
+}
+else {
+    echo "criando pasta do projeto...\n";
+    exec("mkdir -p $publicFolder");
+    $file = fopen("$publicFolder/index.html", 'x');
+    fwrite($file, "index.html do projeto $projectName!");
+    fclose($file);
+}
+/**
+ * setting owner
+ */
+echo "setting owner of $baseFolder/$projectName to $username...\n";
+exec("chown -R $username:$username $baseFolder/$projectName");
+
+/**
+ * make template
+ */
+echo "criando template do site...\n\n";
+
+$template  = "NameVirtualHost *\n";
+$template .= "<VirtualHost *>\n";
+$template .= "	ServerAdmin lpanebr@gmail.com\n";
+$template .= "	ServerName $projectName\n\n";
+
+$template .= "	DocumentRoot $publicFolder\n";
+$template .= "	<Directory />\n";
+$template .= "		Options FollowSymLinks\n";
+$template .= "		AllowOverride None\n";
+$template .= "	</Directory>\n";
+$template .= "	<Directory $publicFolder/>\n";
+$template .= "		Options Indexes FollowSymLinks MultiViews\n";
+$template .= "		AllowOverride all\n";
+$template .= "		Order allow,deny\n";
+$template .= "		allow from all\n";
+$template .= "	</Directory>\n\n";
+
+$template .= "	ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/\n";
+$template .= "	<Directory \"/usr/lib/cgi-bin\">\n";
+$template .= "		AllowOverride None\n";
+$template .= "		Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch\n";
+$template .= "		Order allow,deny\n";
+$template .= "		Allow from all\n";
+$template .= "	</Directory>\n\n";
+$template .= "";
+$template .= "	ErrorLog /var/log/apache2/error.mysites.$projectName.log\n";
+
+$template .= "	# Possible values include: debug, info, notice, warn, error, crit,\n";
+$template .= "	# alert, emerg.\n";
+$template .= "	LogLevel warn\n\n";
+
+$template .= "	CustomLog /var/log/apache2/access.mysites.$projectName.log combined\n";
+$template .= "	ServerSignature On\n\n";
+
+$template .= "</VirtualHost>";
+
+echo "template do site criada!\n\n";
+echo "$template\n\n";
+
+/**
+ * criando site
+ */
+echo "criando site em /etc/apache2/sites-available/$projectName...\n";
+
+$file = fopen("/etc/apache2/sites-available/$projectName", 'x');
+fwrite($file, $template);
+fclose($file);
+
+/**
+ * enable site
+ */
+echo "habilitando site /etc/apache2/sites-available/$projectName...\n";
+exec("a2ensite $projectName");
+
+/**
+ * adding site to hosts
+ */
+echo "atualizando site em /etc/hosts...\n";
+$file = fopen("/etc/hosts", 'a+');
+fwrite($file, "\n127.0.0.1 $projectName\n");
+fclose($file);
+
+/**
+ * restart apache
+ */
+echo "reiniciando apache...\n";
+exec("/etc/init.d/apache2 force-reload");
+
+echo "project $projectName created!";
