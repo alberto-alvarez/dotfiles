@@ -1,0 +1,17 @@
+#!/bin/bash
+MYSQLUSER="youruser"
+MYSQLPASS="yourpass"
+
+EXTERNALIP="extip"
+LOCALIP="localip"
+
+MYSITES="/home/to/your/projects"
+DBBACKUPPATH="/database-backups"
+
+HOME_BACKUPS_PATH=$HOME/backups
+
+MONGODB_USER="MongoDbUserName"
+MONGODB_PASS="MongoDbPassword"
+MONGODB_PRODUCTION_IP=""
+MONGODB_EXTERNAL_IP=""
+MONGODB_LOCAL_IP=""
