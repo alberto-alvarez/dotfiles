@@ -107,6 +107,6 @@ else
     echo "Creating Database " $importedDbName
     mysqladmin -u $MYSQLUSER -p$MYSQLPASS create $importedDbName
 
-    echo "    Importing to ""$USER""_$dbname ..."
+    echo "    Importing to $importedDbName ..."
     mysql -u $MYSQLUSER -p$MYSQLPASS $importedDbName < /tmp/$uncompressedDumpFile
 fi
