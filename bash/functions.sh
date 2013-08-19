@@ -27,6 +27,11 @@ function cddotfiles () {
    guake -r dotfiles
 }
 
+function cdcpub () {
+   cd $MYSITES/cpub/public/$1
+   guake -r cpub
+}
+
 function goturing () {
    guake -r turing
    ssh lpanebr@192.168.1.10
