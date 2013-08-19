@@ -27,6 +27,11 @@ function cddotfiles () {
    guake -r dotfiles
 }
 
+function cdcpub () {
+   cd $MYSITES/cpub/public/$1
+   guake -r cpub
+}
+
 function goturing () {
    guake -r turing
    ssh lpanebr@192.168.1.10
@@ -39,4 +44,12 @@ function gogutenberg () {
 
 function findhere () {
    grep -irn "$@" --exclude-dir='.git' .
+}
+
+function lmount () {
+   grep $1 /etc/fstab | awk '{print $2}' | xargs sudo mount
+}
+
+function lumount () {
+   grep $1 /etc/fstab | awk '{print $2}' | xargs sudo umount
 }

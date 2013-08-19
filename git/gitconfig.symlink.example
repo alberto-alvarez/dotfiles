@@ -11,7 +11,7 @@
 [alias]
         co = checkout
         count   = !git shortlog -sn
-        st   = !git status -sb
+        st   = !git status
 [color]
         diff = auto
         status = auto
