@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ $# -eq 1 ];
+then
+    pactl set-sink-volume 0 $1
+else
+        echo "*********************************************************"
+        echo " set main audio interface volume                         "
+        echo "*********************************************************"
+        echo
+        echo "Examples:"
+        echo "          $0 50%"
+        echo "          $0 100%"
+        echo "          $0 150%"
+        echo
+fi
