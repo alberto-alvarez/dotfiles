@@ -32,6 +32,11 @@ function cdcpub () {
    guake -r cpub
 }
 
+function cdwebdev () {
+   cd $MYSITES/webdev/public/$1
+   guake -r webdev
+}
+
 function goturing () {
    guake -r turing
    ssh lpanebr@192.168.1.10
