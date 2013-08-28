@@ -26,20 +26,15 @@ echo "   Database SCP and RESTORE"
 echo ""
 read -p "   Type the database name to restore: " dbname
 echo ""
-echo -n "   Use $date to restore the backup? [yes or no]: "
+echo -n "   Use $date to restore the backup? [yes or no] (yes default): "
 read yno
 case $yno in
-
-        [yYsS] | Yes | yes )
-                echo "   Using $date to retore the backup"
-                ;;
 
         [nN] | No | no )
                 echo -n "   Type a date like $date to restore the backup: "
                 read date
                 ;;
-        *) echo "Invalid input!"
-            exit 1
+        *) echo "   Using $date to retore the backup"
             ;;
 esac
 

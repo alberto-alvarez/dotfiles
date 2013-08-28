@@ -1,8 +1,2 @@
 alias t='todo.sh -d /home/lpanebr/Dropboxes/lpanebr/Dropbox/todo/todo.cfg'
 alias tp='ls -l /home/lpanebr/Dropboxes/lpanebr/Dropbox/todo/actions/'
-
-alias gitst='git status -sb'
-alias gitlog="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-alias gitclog="git log --pretty=format:'%s' --abbrev-commit --date=relative"
-alias gitdiff='git diff --minimal --patience --word-diff'
-alias gitrm="git status | grep deleted | awk '{\$1=\$2=\"\"; print \$0}' | perl -pe 's/^[ \t]*//' | sed 's/ /\\\\ /g' | xargs git rm"
