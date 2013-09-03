@@ -1,2 +1,3 @@
 alias t='todo.sh -d /home/lpanebr/Dropboxes/lpanebr/Dropbox/todo/todo.cfg'
 alias tp='ls -l /home/lpanebr/Dropboxes/lpanebr/Dropbox/todo/actions/'
+alias bd=". bd -s"

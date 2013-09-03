@@ -9,7 +9,7 @@ fi
 [ -z "$PS1" ] && return
 
 # autoload .sh files
-for source in `find .dotfiles -maxdepth 2 -name \*.sh`
+for source in `find ~/.dotfiles -maxdepth 2 -name \*.sh`
 do
   source $source
 done
