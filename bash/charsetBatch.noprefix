@@ -1,5 +1,0 @@
-for file in *.$1
-do
-iconv -f iso8859-1 -t utf8 $file > temp
-mv temp $file
-done
