@@ -58,3 +58,40 @@ function lmount () {
 function lumount () {
    grep $1 /etc/fstab | awk '{print $2}' | xargs sudo umount
 }
+
+function webdev () {
+   declare -a services=("mysql" "apache2" "mongodb")
+
+   for service in ${services[@]}
+   do
+      serviceStatus=`sudo service $service status | grep process | wc -l`
+      if [ "$serviceStatus" == "1" ]
+         then
+         running $service
+      else
+         stopped $service
+      fi
+   done
+}
+
+function webdevoff () {
+   declare -a services=("mysql" "apache2" "mongodb")
+
+   for service in ${services[@]}
+   do
+      serviceStatus=`sudo service $service stop`
+   done
+
+   webdev
+}
+
+function webdevon () {
+   declare -a services=("mysql" "apache2" "mongodb")
+
+   for service in ${services[@]}
+   do
+      serviceStatus=`sudo service $service start`
+   done
+
+   webdev
+}

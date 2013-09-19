@@ -14,6 +14,26 @@ do
   source $source
 done
 
+info () {
+  printf "  [ \033[00;34m..\033[0m ] $1"
+}
+
+user () {
+  printf "\r  [ \033[0;33m?\033[0m ] $1 "
+}
+
+success () {
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+}
+
+stopped () {
+  printf "\r\033[2K  [\033[0;33m STOPPED \033[0m] \033[0;31m$1\033[0m\n"
+}
+
+running () {
+  printf "\r\033[2K  [\033[0;33m RUNNING \033[0m] \033[00;32m$1\033[0m\n"
+}
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
