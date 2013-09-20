@@ -197,7 +197,7 @@ install_binscripts () {
   done
 }
 
-install_binscripts () {
+install_binscriptsnoprefix () {
   info 'installing bin scripts'
 
   overwrite_all=false
