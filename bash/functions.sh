@@ -52,11 +52,11 @@ function findhere () {
 }
 
 function lmount () {
-   grep $1 /etc/fstab | awk '{print $2}' | xargs sudo mount
+   grep $1 /etc/fstab | awk '{print $2}' | xargs /usr/bin/sudo /bin/mount
 }
 
 function lumount () {
-   grep $1 /etc/fstab | awk '{print $2}' | xargs sudo umount
+   grep $1 /etc/fstab | awk '{print $2}' | xargs /usr/bin/sudo /bin/umount
 }
 
 function webdev () {
