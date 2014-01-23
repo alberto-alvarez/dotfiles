@@ -17,14 +17,14 @@ source ~/.localrc
 # EXTERNALIP="IpWhereBackupsAreStored"
 # DBBACKUPPATH="FullPathWhereBackupsAreStored"
 
-# We expect backup files to be gunziped and named like dbname-yyyy-mm-dd.sql.gz
+# We expect backup files to be gunziped and named like dbname.sql.gz-yyyymmdd
 # Save today date for convenience
-date=`date +%Y-%m-%d`
+date=`date +%Y%m%d`
 
 echo ""
 echo "   Database SCP and RESTORE"
 echo ""
-read -p "   Type the database name to restore: " dbname
+read -p "   Type the database name to restore (example: server_database): " dbname
 echo ""
 echo -n "   Use $date to restore the backup? [yes or no] (yes default): "
 read yno
@@ -84,7 +84,7 @@ then
     mysql -u $MYSQLUSER -p$MYSQLPASS $importedDbName < /tmp/$uncompressedDumpFile
 else
     echo "    1. Downloading $dbname-$date.sql.gz to /tmp/"$uncompressedDumpFile.gz
-    scp $EXTERNALIP:$DBBACKUPPATH/$dbname-$date.sql.gz /tmp/$uncompressedDumpFile.gz
+    scp $EXTERNALIP:$DBBACKUPPATH/$dbname.sql.gz-$date /tmp/$uncompressedDumpFile.gz
 
     echo "    2. Decompressing gz file..."
     gunzip -f /tmp/$uncompressedDumpFile.gz
