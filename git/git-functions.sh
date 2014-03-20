@@ -18,6 +18,10 @@ function gitdiff () {
    git diff --minimal --patience --word-diff $@
 }
 
+function gitdiff--ignore-all-space () {
+   git diff --ignore-all-space --minimal --patience --word-diff $@
+}
+
 function gitrm () {
    git status | grep deleted | awk '{\$1=\$2=\"\"; print \$0}' | perl -pe 's/^[ \t]*//' | sed 's/ /\\\\ /g' | xargs git rm
 }
