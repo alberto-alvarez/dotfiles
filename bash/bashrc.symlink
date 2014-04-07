@@ -140,7 +140,7 @@ function cdw () {
    ls
 }
 
-PATH=$PATH:/home/lpanebr/bin:/home/lpanebr/Dropboxes/lpanebr/Dropbox/todo
+PATH=$PATH:$HOME/bin:$HOME/Dropboxes/lpanebr/Dropbox/todo:$HOME/.node/bin
 export PATH
 
 #todo.txt settings
