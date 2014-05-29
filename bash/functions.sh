@@ -64,12 +64,12 @@ function webdev () {
 
    for service in ${services[@]}
    do
-      serviceStatus=`sudo service $service status | grep process | wc -l`
+      serviceStatus=`sudo service $service status | grep '.*[0-9]\{3,\}.*' | wc -l`
       if [ "$serviceStatus" == "1" ]
          then
-         running $service
+         running 'RUNNING' $service
       else
-         stopped $service
+         stopped 'STOPPED' $service
       fi
    done
 }
@@ -95,3 +95,4 @@ function webdevon () {
 
    webdev
 }
+
