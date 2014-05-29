@@ -27,11 +27,11 @@ success () {
 }
 
 stopped () {
-  printf "\r\033[2K  [\033[0;33m STOPPED \033[0m] \033[0;31m$1\033[0m\n"
+  printf "\r\033[2K  [\033[0;33m $1 \033[0m] \033[0;31m$2\033[0m\n"
 }
 
 running () {
-  printf "\r\033[2K  [\033[0;33m RUNNING \033[0m] \033[00;32m$1\033[0m\n"
+  printf "\r\033[2K  [\033[0;33m $1 \033[0m] \033[00;32m$2\033[0m\n"
 }
 
 # don't put duplicate lines in the history. See bash(1) for more options
@@ -140,7 +140,7 @@ function cdw () {
    ls
 }
 
-PATH=$PATH:$HOME/bin:$HOME/Dropboxes/lpanebr/Dropbox/todo:$HOME/.node/bin
+PATH=$PATH:$HOME/bin:$HOME/Dropbox/todo:$HOME/.node/bin
 export PATH
 
 #todo.txt settings
