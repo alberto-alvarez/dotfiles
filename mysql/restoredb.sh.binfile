@@ -75,13 +75,13 @@ then
     fi
     echo "Dropping Database " $importedDbName
     # || true to avoid exit if db does not exist!
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop $importedDbName || true
+    mysqladmin -h $LOCALIP -u $MYSQLUSER -p$MYSQLPASS -f drop $importedDbName || true
 
     echo "Creating Database " $importedDbName
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS create $importedDbName
+    mysqladmin -h $LOCALIP -u $MYSQLUSER -p$MYSQLPASS create $importedDbName
 
     echo "    Skipping download and importing to ""$USER""_$dbname ..."
-    mysql -u $MYSQLUSER -p$MYSQLPASS $importedDbName < /tmp/$uncompressedDumpFile
+    mysql -h $LOCALIP -u $MYSQLUSER -p$MYSQLPASS $importedDbName < /tmp/$uncompressedDumpFile
 else
     echo "    1. Downloading $dbname-$date.sql.gz to /tmp/"$uncompressedDumpFile.gz
     scp $EXTERNALIP:$DBBACKUPPATH/$dbname.sql.gz-$date /tmp/$uncompressedDumpFile.gz
@@ -97,11 +97,11 @@ else
 
     echo "Dropping Database " $importedDbName
     # || true to avoid exit if db does not exist!
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS -f drop $importedDbName || true
+    mysqladmin -h $LOCALIP -u $MYSQLUSER -p$MYSQLPASS -f drop $importedDbName || true
 
     echo "Creating Database " $importedDbName
-    mysqladmin -u $MYSQLUSER -p$MYSQLPASS create $importedDbName
+    mysqladmin -h $LOCALIP -u $MYSQLUSER -p$MYSQLPASS create $importedDbName
 
     echo "    Importing to $importedDbName ..."
-    mysql -u $MYSQLUSER -p$MYSQLPASS $importedDbName < /tmp/$uncompressedDumpFile
+    mysql -h $LOCALIP -u $MYSQLUSER -p$MYSQLPASS $importedDbName < /tmp/$uncompressedDumpFile
 fi
