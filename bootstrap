@@ -2,8 +2,8 @@
 #
 # bootstrap installs things.
 
-# Inspired by Zach Holman´s dotfiles:
-# https://github.com/holman/dotfiles
+# Inspired by Luciano Panepucci´s dotfiles:
+# https://github.com/lpanebr/dotfiles
 #
 # Stolen from Zach Holman
 # https://github.com/holman/dotfiles/blob/master/script/bootstrap
@@ -12,7 +12,7 @@ DOTFILES_VERSION='0.3.1'
 DOTFILES_ROOT="`pwd`"
 # your bin folder should be in your PATH
 BIN_SCRIPTS="$HOME/bin"
-YOUR_PREFIX="lgp-"
+YOUR_PREFIX="ac-"
 
 set -e
 

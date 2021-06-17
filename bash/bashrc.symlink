@@ -9,7 +9,7 @@ fi
 [ -z "$PS1" ] && return
 
 # autoload .sh files
-for source in `find ~/.dotfiles -maxdepth 2 -name \*.sh`
+for source in `find ~/webdev/dotfiles -maxdepth 2 -name \*.sh`
 do
   source $source
 done
@@ -133,15 +133,3 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
-
-# my custom functions:
-function cdw () {
-   cd /home/$USER/Documents/turing/$USER/www/$1
-   ls
-}
-
-PATH=$PATH:$HOME/bin:$HOME/Dropbox/todo:$HOME/.node/bin
-export PATH
-
-#todo.txt settings
-export TODOTXT_DEFAULT_ACTION=ls
